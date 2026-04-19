@@ -69,8 +69,20 @@ int main()
     while (true)
     {
         SOCKET clientSocket = accept(serverSocket, NULL, NULL);
+        
+        if (clientSocket != INVALID_SOCKET)
+        {
+            CreateThread(
+                NULL,
+                0,
+                handleClient,
+                (LPVOID)clientSocket,
+                0,
+                NULL
+            );
+        }
+    }
 
-     
 
     closesocket(serverSocket);
     WSACleanup();
