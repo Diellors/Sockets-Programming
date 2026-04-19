@@ -64,8 +64,13 @@ int main()
     bind(serverSocket, (sockaddr*)&serverAddr, sizeof(serverAddr));
     listen(serverSocket, 5);
 
- 
+    std::cout << "Server running on port " << PORT << "...\n";
 
+    while (true)
+    {
+        SOCKET clientSocket = accept(serverSocket, NULL, NULL);
+
+     
 
     closesocket(serverSocket);
     WSACleanup();
