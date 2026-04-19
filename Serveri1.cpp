@@ -4,7 +4,7 @@
 #include <string>
 #include <cstring>
 
-<<<<<<< HEAD
+
 #pragma comment(lib, "ws2_32.lib")
 
 #define PORT 8080
@@ -21,7 +21,6 @@ DWORD WINAPI handleClient(LPVOID param)
         return 0;
     }
 }
-=======
 
 
->>>>>>> 3812282621f13159befec6357226e57cd2c0cbfa
+
