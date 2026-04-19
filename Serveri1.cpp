@@ -4,7 +4,7 @@
 #include <string>
 #include <cstring>
 
-<<<<<<< HEAD
+
 #pragma comment(lib, "ws2_32.lib")
 
 #define PORT 8080
@@ -20,8 +20,16 @@ DWORD WINAPI handleClient(LPVOID param)
         closesocket(clientSocket);
         return 0;
     }
+
+     buffer[bytes] = '\0';
+    std::string role(buffer);
+
+    std::cout << "[+] Client role: " << role << std::endl;
+
+    const char* msg = "Connected successfully\n";
+    send(clientSocket, msg, strlen(msg), 0);
 }
-=======
 
 
->>>>>>> 3812282621f13159befec6357226e57cd2c0cbfa
+
+
