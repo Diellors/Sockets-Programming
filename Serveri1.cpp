@@ -20,7 +20,16 @@ DWORD WINAPI handleClient(LPVOID param)
         closesocket(clientSocket);
         return 0;
     }
+
+     buffer[bytes] = '\0';
+    std::string role(buffer);
+
+    std::cout << "[+] Client role: " << role << std::endl;
+
+    const char* msg = "Connected successfully\n";
+    send(clientSocket, msg, strlen(msg), 0);
 }
+
 
 
 
