@@ -28,6 +28,25 @@ DWORD WINAPI handleClient(LPVOID param)
 
     const char* msg = "Connected successfully\n";
     send(clientSocket, msg, strlen(msg), 0);
+
+     // main loop
+    while (true) {
+        memset(buffer, 0, sizeof(buffer));
+
+        int bytesRecv = recv(clientSocket, buffer, sizeof(buffer) - 1, 0);
+        if (bytesRecv <= 0) break;
+
+        buffer[bytesRecv] = '\0';
+
+        std::string request(buffer);
+        std::string response = "[Server echo]: " + request;
+
+        send(clientSocket, response.c_str(), response.size(), 0);
+    }
+
+    std::cout << "[-] Client disconnected\n";
+    closesocket(clientSocket);
+    return 0;
 }
 
 
