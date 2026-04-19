@@ -49,6 +49,26 @@ DWORD WINAPI handleClient(LPVOID param)
     return 0;
 }
 
+int main()
+{
+    WSADATA wsa;
+    WSAStartup(MAKEWORD(2, 2), &wsa);
 
+    SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, 0);
+
+    sockaddr_in serverAddr{};
+    serverAddr.sin_family = AF_INET;
+    serverAddr.sin_port = htons(PORT);
+    serverAddr.sin_addr.s_addr = INADDR_ANY;
+
+    bind(serverSocket, (sockaddr*)&serverAddr, sizeof(serverAddr));
+    listen(serverSocket, 5);
+
+ 
+
+
+    closesocket(serverSocket);
+    WSACleanup();
+}
 
 
