@@ -50,6 +50,7 @@ int main()
     if (sock == INVALID_SOCKET)
     {
         std::cout << "Socket error\n";
+        WSACleanup();
         return 1;
     }
 
@@ -58,7 +59,8 @@ int main()
     serv_addr.sin_port = htons(PORT);
     serv_addr.sin_addr.s_addr = inet_addr(SERVER_IP);
 
-    //provoj me u lidh me server dhe nese deshton e shfaq nje error
+
+    // provoj me u lidh me server dhe nese deshton del error
     if (connect(sock, (sockaddr*)&serv_addr, sizeof(serv_addr)) == SOCKET_ERROR)
     {
         int err = WSAGetLastError();
@@ -72,5 +74,37 @@ int main()
 
     std::cout << "Connected successfully!\n";
 
+    std::string role;
+    std::cout << "Zgjidh rolin (admin/user): ";
+    std::getline(std::cin, role);
 
+    send(sock, role.c_str(), role.size(), 0);
+
+    CreateThread(
+        NULL,
+        0,
+        receiveMessages,
+        (LPVOID)sock,
+        0,
+        NULL
+    );
+
+    std::string msg;
+
+    while (true)
+    {
+        std::cout << "> ";
+        std::getline(std::cin, msg);
+
+        if (msg == "exit")
+            break;
+
+        msg += "\n";
+        send(sock, msg.c_str(), msg.size(), 0);
+    }
+
+    closesocket(sock);
+    WSACleanup();
+
+    return 0;
 }
